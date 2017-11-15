@@ -24,10 +24,17 @@ static NSBundle *bundle = nil;
         NSArray* languages = [def objectForKey:@"AppleLanguages"];
         
         NSString *current = [languages objectAtIndex:0];
-        
-        string = current;
-        
-        [def setValue:current forKey:@"userLanguage"];
+        if ([current hasPrefix:@"en"]) {
+            [def setValue:@"en" forKey:@"userLanguage"];
+            string = @"en";
+            
+        } else if([current hasPrefix:@"zh-Hans"]) {
+            [def setValue:@"zh-Hans" forKey:@"userLanguage"];
+            string = @"zh-Hans";
+        } else {
+            [def setValue:@"en" forKey:@"userLanguage"];
+            string = @"en";
+        }
         
         [def synchronize];//持久化，不加的话不会保存
     }
